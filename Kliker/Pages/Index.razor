@@ -1,0 +1,36 @@
+﻿@page "/"
+@inject Account Account
+@inject Financing Financing
+
+<PageTitle>Praworządność Clicker</PageTitle>
+<MudGrid Class="flex-column flex-md-row mud-height-full">
+    <MudItem Class="flex-grow-1" md="6">
+        <UpperWindow />
+    </MudItem>
+    <MudItem md="6" Class="center">
+        <Clicker />
+    </MudItem>
+</MudGrid>
+
+<button class="btn btn-primary" @onclick="() => Account.Increment()">weź łapówkę</button>
+<button class="btn btn-primary" @onclick="() => Account.Primaries()">prawybory</button>
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await SetClock();
+        Timer timer = new System.Threading.Timer(x => InvokeAsync(SetClock), null, 1000, 1000);
+    }
+
+    private Timer? timer;
+
+    private Task SetClock()
+    {
+        Account.Reevaluate();
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+}

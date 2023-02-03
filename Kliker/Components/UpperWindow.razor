@@ -1,0 +1,16 @@
+﻿@inject Financing Financing
+@inject Account Account
+
+@foreach (var action in Financing.Actions)
+{
+    <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="() => Financing.Finance(action)" Disabled="Financing.CanFinance(action)">@action.ActionName (-@(Account.Pln(action.Cost)))</MudButton>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Financing.OnChange += StateHasChanged;
+        Account.OnChange += StateHasChanged;
+    }
+}

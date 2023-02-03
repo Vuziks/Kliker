@@ -1,0 +1,14 @@
+﻿@inject Account Account
+
+<MudText Align="Align.Center">Partyjny przychód: @(Account.Pln(Account.Sum))</MudText>
+    <MudText Align="Align.Center">@(Account.Pln(Account.Income * Account.Multiplier))/s</MudText>
+<MudText Align="Align.Center">mnożnik: x@(Account.Multiplier)</MudText>
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Account.OnChange += StateHasChanged;
+    }
+}
